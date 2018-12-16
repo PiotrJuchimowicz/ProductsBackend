@@ -3,6 +3,8 @@ package com.company.products.controller;
 import com.company.products.dto.CategoryDto;
 import com.company.products.dto.ProductDto;
 import com.company.products.service.ProductService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +16,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 @CrossOrigin(origins = "http://localhost:3000")
+@Slf4j
+@RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
-    private final Logger log;
-
-    @Autowired
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-        this.log = LoggerFactory.getLogger(ProductController.class);
-    }
 
     @PostMapping
     public void create(@RequestBody ProductDto productDto) {

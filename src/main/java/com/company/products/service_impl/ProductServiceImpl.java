@@ -7,6 +7,8 @@ import com.company.products.mapper.ProductMapper;
 import com.company.products.model.CategoryEntity;
 import com.company.products.model.ProductEntity;
 import com.company.products.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +20,11 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@Slf4j
+@RequiredArgsConstructor
 public class ProductServiceImpl implements com.company.products.service.ProductService {
     private final ProductMapper productMapper;
     private final ProductRepository productRepository;
-    private final Logger log;
-
-    @Autowired
-    public ProductServiceImpl(ProductMapper productMapper, ProductRepository productRepository) {
-        this.productMapper = productMapper;
-        this.productRepository = productRepository;
-        this.log = LoggerFactory.getLogger(ProductServiceImpl.class);
-    }
-
 
     @Override
     public ProductDto read(Long id) {
