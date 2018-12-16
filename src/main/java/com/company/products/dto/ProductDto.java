@@ -11,5 +11,6 @@ public class ProductDto {
     private Long id;
     private String name;
     private Double price;
+    private Boolean isInSummary = false;
     private List<CategoryDto> categories = new LinkedList<>();
 }

@@ -39,6 +39,12 @@ public class ProductController {
         return productService.read(id);
     }
 
+    @GetMapping("/summary")
+    public List<ProductDto> readFromSummary(){
+        log.info("Getting products from summary ");
+       return productService.readFromSummary();
+    }
+
     @GetMapping
     public List<ProductDto> readAll() {
         log.info("Getting all products");

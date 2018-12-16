@@ -12,6 +12,8 @@ public interface ProductService {
 
     List<ProductDto> readAll();
 
+    List<ProductDto> readFromSummary();
+
     ProductDto update(ProductDto productDto);
 
     void delete(Long id);

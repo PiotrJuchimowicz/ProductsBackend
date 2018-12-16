@@ -20,6 +20,7 @@ public class ProductEntity {
     private Long id;
     private String name;
     private Double price;
+    private Boolean isInSummary=false;
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE

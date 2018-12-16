@@ -50,6 +50,12 @@ public class ProductServiceImpl implements com.company.products.service.ProductS
     }
 
     @Override
+    public List<ProductDto> readFromSummary() {
+        List<ProductEntity> productEntities = productRepository.findByIsInSummaryTrue();
+        return productMapper.productEntitiesToProductDtos(productEntities);
+    }
+
+    @Override
     public ProductDto create(ProductDto productDto) {
         ProductEntity productEntity = productMapper.productDtoToProductEntity(productDto);
         log.info("Mapped to entity: " + productEntity);
