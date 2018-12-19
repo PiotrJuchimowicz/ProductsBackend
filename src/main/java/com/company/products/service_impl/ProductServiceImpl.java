@@ -6,12 +6,10 @@ import com.company.products.exception.NotFoundException;
 import com.company.products.mapper.ProductMapper;
 import com.company.products.model.CategoryEntity;
 import com.company.products.model.ProductEntity;
+import com.company.products.repository.CategoryRepository;
 import com.company.products.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,6 +23,7 @@ import java.util.Optional;
 public class ProductServiceImpl implements com.company.products.service.ProductService {
     private final ProductMapper productMapper;
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public ProductDto read(Long id) {
