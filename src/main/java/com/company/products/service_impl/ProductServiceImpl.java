@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +57,8 @@ public class ProductServiceImpl implements com.company.products.service.ProductS
 
     @Override
     public ProductDto create(ProductDto productDto) {
+        List<CategoryDto> preparedCategories = this.prepareCategories(productDto.getCategories());
+        productDto.setCategories(preparedCategories);
         ProductEntity productEntity = productMapper.productDtoToProductEntity(productDto);
         log.info("Mapped to entity: " + productEntity);
         productEntity = productRepository.save(productEntity);
@@ -80,13 +83,18 @@ public class ProductServiceImpl implements com.company.products.service.ProductS
     }
 
     public ProductDto addCategory(Long productId, CategoryDto categoryDto) {
+        String preparedCategoryName = categoryDto.getName().trim().toUpperCase();
+        categoryDto.setName(preparedCategoryName);
         Optional<ProductEntity> productEntityOptional = productRepository.findById(productId);
         if (productEntityOptional.isPresent()) {
             ProductEntity productEntity = productEntityOptional.get();
             log.info("Found entity: " + productEntity);
             CategoryEntity categoryEntity = new CategoryEntity();
+            categoryEntity.setId(categoryDto.getId());
             categoryEntity.setName(categoryDto.getName());
-            productEntity.getCategories().add(categoryEntity);
+            if(!productEntity.getCategories().contains(categoryEntity)){
+                productEntity.getCategories().add(categoryEntity);
+            }
             productRepository.save(productEntity);
             return productMapper.productEntityToProductDto(productEntity);
         } else {
@@ -97,5 +105,14 @@ public class ProductServiceImpl implements com.company.products.service.ProductS
     @Override
     public void delete(Long id) {
         productRepository.deleteById(id);
+    }
+
+    private List<CategoryDto> prepareCategories(List<CategoryDto> categories){
+        List<CategoryDto> preparedCategories = new LinkedList<>();
+        for(CategoryDto categoryDto : categories){
+            String preparedCategoryName = categoryDto.getName().trim().toUpperCase();
+            preparedCategories.add(new CategoryDto(categoryDto.getId(),preparedCategoryName));
+        }
+        return preparedCategories;
     }
 }
